@@ -16,9 +16,16 @@
     width: 100%;
     height: 100%;
   }
-  .active{
-    width: 375px!important;
-    height: 667px!important;
+
+  .active {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .activeRoot{
+    width: 375px !important;
+    height: 667px !important;
     margin: auto;
   }
 </style>
@@ -34,10 +41,15 @@
       console.log('移动')
       type = 'move'
     } else {
-      // const dom = document.createElement('div');
+      const dom = document.createElement('div');
       const root = document.getElementById('root');
       // dom.appendChild(root)
-      root?.classList.add('active')
+      dom.className = 'active';
+      root?.classList.add('activeRoot')
+      root.parentNode.replaceChild(dom, root);//  获取子元素原来的父元素并将新父元素代替子元素
+      dom.appendChild(root);
+      // root.parentNode.insertBefore(dom, root);
+      // root?.classList.add('active')
       type = 'pc'
       console.log('pc')
     }
