@@ -9,6 +9,7 @@ import Administrators from '../pages/administrators/index';
 import SystemLog from '../pages/system-log/index';
 import SystemMaintenance from '../pages/system-maintenance/index';
 import AboutDevices from '../pages/about-devices/index';
+import WifiNetwork from '../pages/wifi-network';
 const routerList = [
     {
         path: '/',
@@ -53,6 +54,10 @@ const routerList = [
     {
         path: '/about-devices',
         element: <AboutDevices />
+    },
+    {
+        path:'/wifi-network',
+        element:<WifiNetwork/>
     }
 ];
 

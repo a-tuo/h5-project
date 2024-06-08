@@ -18,8 +18,8 @@ function NetworkSettings() {
         <NavBar className='top' onBack={back}>网络设置</NavBar>
         <div className='content'>
             <List mode='card' header="系统设置">
-                <List.Item prefix={<BankcardOutline />} onClick={() => { }}>wifi设置</List.Item>
-                <List.Item prefix={<SetOutline />} onClick={() => { }}>有线设置</List.Item>
+                <List.Item prefix={<BankcardOutline />} onClick={() => { navigate('/wifi-network') }}>wifi设置</List.Item>
+                <List.Item prefix={<SetOutline />} onClick={() => { navigate('/wifi-network') }}>有线设置</List.Item>
             </List>
             <Form
                 mode='card'
