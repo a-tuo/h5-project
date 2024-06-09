@@ -4,7 +4,7 @@ import {
     BankcardOutline,
     SetOutline
 } from 'antd-mobile-icons';
-import './index.less'
+import styles from './index.module.less'
 function NetworkSettings() {
     const navigate = useNavigate();
     const [form] = Form.useForm();
@@ -14,9 +14,9 @@ function NetworkSettings() {
     const onFinish = () => {
 
     }
-    return <div className='main'>
-        <NavBar className='top' onBack={back}>网络设置</NavBar>
-        <div className='content'>
+    return <div className={styles.main}>
+        <NavBar className={styles.top} onBack={back}>网络设置</NavBar>
+        <div className={styles.content}>
             <List mode='card' header="基本设置">
                 <List.Item prefix={<BankcardOutline />} onClick={() => { navigate('/wifi-network', { state: { name: "wifi设置" } }) }}>wifi设置</List.Item>
                 <List.Item prefix={<SetOutline />} onClick={() => { navigate('/wifi-network', { state: { name: "有线设置" } }) }}>有线设置</List.Item>

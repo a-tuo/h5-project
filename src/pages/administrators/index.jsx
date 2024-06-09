@@ -7,7 +7,7 @@ function Administrators() {
         navigate(-1)
     }
     return <div className={styles.main}>
-        <NavBar className='top' onBack={back}>系统日志</NavBar>
+        <NavBar className='top' onBack={back}>管理员</NavBar>
     </div>
 }
 
