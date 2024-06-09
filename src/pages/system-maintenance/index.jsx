@@ -4,28 +4,31 @@ import { useRef, useState } from 'react';
 import styles from './index.module.less';
 import {
     UnorderedListOutline,
-    PayCircleOutline,
+    ExclamationShieldOutline,
     SetOutline,
     ExclamationTriangleOutline,
     FileOutline,
     MovieOutline,
     CheckShieldFill
 } from 'antd-mobile-icons';
+import { useTranslation } from 'react-i18next';
+import '../../i18n/config'
 function SystemMaintenance() {
     const navicate = useNavigate();
-    const [fileList, setFileList] = useState([])
+    const [fileList, setFileList] = useState([]);
+    const { t } = useTranslation();
     const input = useRef(null);
     const back = () => {
         navicate(-1)
     }
     const handleClearFactory = () => {
         Dialog.confirm({
-            content: '是否清空出厂设置',
+            content: t('是否清空出厂设置'),
             onConfirm: async () => {
                 Toast.show({
                     // TODO:
                     icon: 'success',
-                    content: '恢复出厂设置成功',
+                    content: t('恢复出厂设置成功'),
                     position: 'bottom',
                 })
             },
@@ -33,12 +36,12 @@ function SystemMaintenance() {
     }
     const handleClearFile = () => {
         Dialog.confirm({
-            content: '是否清空档案',
+            content: t('是否清空档案'),
             onConfirm: async () => {
                 Toast.show({
                     // TODO:
                     icon: 'success',
-                    content: '清空档案成功',
+                    content: t('清空档案成功'),
                     position: 'bottom',
                 })
             },
@@ -97,34 +100,32 @@ function SystemMaintenance() {
 
     const handleRestorArchive = () => {
         Dialog.confirm({
-            content: '是否恢复档案',
+            content: t('是否恢复档案'),
             onConfirm: async () => {
                 Toast.show({
                     icon: 'success',
-                    content: '恢复档案成功',
+                    content: t('恢复档案成功'),
                     position: 'bottom',
                 })
             },
         })
     }
     return <div className={styles.main}>
-        <NavBar className='top' onBack={back}>系统维护</NavBar>
+        <NavBar className='top' onBack={back}>{t('系统维护')}</NavBar>
         <List mode="card">
-            <List.Item prefix={<PayCircleOutline />} onClick={handleClearFactory}>清空出厂设置</List.Item>
-            <List.Item prefix={<UnorderedListOutline />} onClick={handleClearFile}>清空档案</List.Item>
-            <List.Item prefix={<SetOutline />} onClick={handleRestoreFactory}>恢复出厂设置</List.Item>
-            <List.Item prefix={<ExclamationTriangleOutline />} onClick={handleRestoreRecord}>恢复记录</List.Item>
-            <List.Item prefix={<FileOutline />} onClick={handleRestorArchive}>恢复档案</List.Item>
-            <List.Item prefix={<MovieOutline />} onClick={handleOpen}>设备升级</List.Item>
+            <List.Item prefix={<ExclamationShieldOutline />} onClick={handleClearFactory}>{t('清空出厂设置')}</List.Item>
+            <List.Item prefix={<UnorderedListOutline />} onClick={handleClearFile}>{t('清空档案')}</List.Item>
+            <List.Item prefix={<SetOutline />} onClick={handleRestoreFactory}>{t('恢复出厂设置')}</List.Item>
+            <List.Item prefix={<ExclamationTriangleOutline />} onClick={handleRestoreRecord}>{t('恢复记录')}</List.Item>
+            <List.Item prefix={<FileOutline />} onClick={handleRestorArchive}>{t('恢复档案')}</List.Item>
+            <List.Item prefix={<MovieOutline />} onClick={handleOpen}>{t('设备升级')}</List.Item>
             <div style={{
                 display: 'none',
             }}>
                 <ImageUploader
-
                     ref={input}
                     value={fileList}
                     onChange={setFileList}
-                // upload={mockUpload}
                 />
             </div>
 

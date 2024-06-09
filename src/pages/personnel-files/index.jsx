@@ -11,7 +11,8 @@ import {
     AddSquareOutline,
     DownlandOutline
 } from 'antd-mobile-icons';
-console.log(styles, 'styles')
+import { useTranslation } from 'react-i18next';
+import '../../i18n/config'
 const data = [
     {
         key: 'add',
@@ -112,7 +113,8 @@ const personList1 = [
     },
 ]
 function PersonnelFiles() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const { t } = useTranslation();
     const [isShowImg, setIsShowImg] = useState(false);
     const [imgsrc, setImgSrc] = useState('');
     const [popVisible, setPopVisble] = useState(false);
@@ -146,11 +148,11 @@ function PersonnelFiles() {
     }
     return !isShowImg ? <>
         <div className={styles.main}>
-            <NavBar className={styles.top} onBack={back}>识别记录</NavBar>
+            <NavBar className={styles.top} onBack={back}>{t('识别记录')}</NavBar>
             <div className={styles.content}>
                 <div className={styles.search}>
-                    <SearchBar placeholder='请输入编号/姓名/部门' className={styles.input} />
-                    <div className={styles.more} onClick={handleClickMore}>更多</div>
+                    <SearchBar placeholder={t('请输入编号/姓名/部门')} className={styles.input} />
+                    <div className={styles.more} onClick={handleClickMore}>{t('更多')}</div>
                 </div>
                 <div className={styles.personList}>
                     {
@@ -161,25 +163,24 @@ function PersonnelFiles() {
                                     <Avatar src={item.img} className={styles.avatar} onClick={() => { handleClickImg(item.img) }} style={{ '--size': '32px' }} />
                                     <div className={styles.right}>
                                         <div className={styles.header}>
-                                            <div className={styles.name}>{item.name} | {item.department}</div>
-                                            <div className={styles.enter}>录入</div>
+                                            <div className={styles.name}>{t(`${item.name} | ${item.department}`)}</div>
+                                            <div className={styles.enter}>{t('录入')}</div>
                                         </div>
                                         <div className={styles.rightContent}>
                                             <div className={styles.contenta}>
                                                 {
                                                     contentTemp.map(i => {
                                                         return <div className={styles.contentItem} key={i.id}>
-                                                            <div className={styles.label}>{`${transformValue[i]}：`}</div>
-                                                            <div className={styles.labelContent}>{item.content[i]}</div>
+                                                            <div className={styles.label}>{t(`${transformValue[i]}：`)}</div>
+                                                            <div className={styles.labelContent}>{t(item.content[i])}</div>
                                                         </div>
                                                     })
                                                 }
                                             </div>
                                             <div className={styles.detail} onClick={() => {
                                                 handleDetail(item)
-                                            }}>{item.isShowDetail ? '收起' : '详细信息'}</div>
+                                            }}>{item.isShowDetail ? t('收起') : t('详细信息')}</div>
                                         </div>
-
                                     </div>
                                 </div>
 
@@ -211,16 +212,16 @@ function PersonnelFiles() {
                             <div className={styles.popupItemIcon}>
                                 {item.icon()}
                             </div>
-                            <div className={styles.popupItemText}>{item.text}</div>
+                            <div className={styles.popupItemText}>{t(item.text)}</div>
                         </div>
                     })
                     }
                 </div>
-                <div className={styles.cancle} onClick={handleCancle}>取消</div>
+                <div className={styles.cancle} onClick={handleCancle}>{t('取消')}</div>
             </div>
         </Popup>
     </> : <div className={styles.img}>
-        <NavBar className={styles.top} onBack={() => { setIsShowImg(false) }}>人员头像</NavBar>
+        <NavBar className={styles.top} onBack={() => { setIsShowImg(false) }}>{t('人员头像')}</NavBar>
         <div className={styles.imgContent}>
             <Image src={imgsrc} />
         </div>

@@ -11,6 +11,8 @@ import {
     AddSquareOutline,
     DownlandOutline
 } from 'antd-mobile-icons';
+import { useTranslation } from 'react-i18next';
+import '../../i18n/config'
 const data = [
     {
         key: 'add',
@@ -127,6 +129,7 @@ const personList1 = [
     },
 ]
 function IdentificationRecord() {
+    const { t } = useTranslation();
     const navigate = useNavigate()
     const [isShowImg, setIsShowImg] = useState(false);
     const [imgsrc, setImgSrc] = useState('');
@@ -162,11 +165,11 @@ function IdentificationRecord() {
     }
     return !isShowImg ? <>
         <div className={styles.main}>
-            <NavBar className={styles.top} onBack={back}>识别记录</NavBar>
+            <NavBar className={styles.top} onBack={back}>{t('识别记录')}</NavBar>
             <div className={styles.content}>
                 <div className={styles.search}>
-                    <SearchBar placeholder='请输入编号/姓名/部门' className={styles.input} />
-                    <div className={styles.more} onClick={handleClickMore}>更多</div>
+                    <SearchBar placeholder={t('请输入编号/姓名/部门')} className={styles.input} />
+                    <div className={styles.more} onClick={handleClickMore}>{t('更多')}</div>
                 </div>
                 <div className={styles.personList}>
                     {
@@ -177,23 +180,23 @@ function IdentificationRecord() {
                                     <Avatar src={item.img} className={styles.avatar} onClick={() => { handleClickImg(item.img) }} style={{ '--size': '32px' }} />
                                     <div className={styles.right}>
                                         <div className={styles.header}>
-                                            <div className={styles.name}>{item.name} | {item.department}</div>
-                                            <div className={styles.enter}>录入</div>
+                                            <div className={styles.name}>{t(`${item.name} | ${item.department}`)}</div>
+                                            <div className={styles.enter}>{t('录入')}</div>
                                         </div>
                                         <div className={styles.rightContent}>
                                             <div className={styles.contenta}>
                                                 {
                                                     contentTemp.map(i => {
                                                         return <div className={styles.contentItem} key={i.id}>
-                                                            <div className={styles.label}>{`${transformValue[i]}：`}</div>
-                                                            <div className={styles.labelContent}>{item.content[i]}</div>
+                                                            <div className={styles.label}>{t(`${transformValue[i]}：`)}</div>
+                                                            <div className={styles.labelContent}>{t(item.content[i])}</div>
                                                         </div>
                                                     })
                                                 }
                                             </div>
                                             <div className={styles.detail} onClick={() => {
                                                 handleDetail(item)
-                                            }}>{item.isShowDetail ? '收起' : '详细信息'}</div>
+                                            }}>{item.isShowDetail ? t('收起') : t('详细信息')}</div>
                                         </div>
 
                                     </div>

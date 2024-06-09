@@ -6,6 +6,8 @@ import { useLocation } from 'react-router-dom';
 import wifi from './asset/wifi.png';
 import { useMemo, useState } from 'react';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
+import '../../i18n/config'
 
 function WifiNetwork() {
     let location = useLocation()
@@ -14,11 +16,11 @@ function WifiNetwork() {
     const [popVisible, setPopVisble] = useState(false);
     const [currentItem, setCurrentItem] = useState({});
     const [netValue, setNetValue] = useState(true);
-    const [currentNetItem,setCurrentNetItem] = useState({})
+    const [currentNetItem,setCurrentNetItem] = useState({});
+    const { t } = useTranslation();
     const btnActive = useMemo(() => {
         return pswData?.length >= 8 ? true : false
     }, [pswData])
-    console.log(location,'location')
     const back = () => {
         navigate(-1)
     }
@@ -59,7 +61,7 @@ function WifiNetwork() {
             setPswData('')
             Toast.show({
                 icon: 'success',
-                content: '连接成功',
+                content: t('连接成功'),
             })
             setPswData('');
             setCurrentNetItem(currentItem)
@@ -87,7 +89,7 @@ function WifiNetwork() {
             <List mode='card'>
                 <List.Item>
                     <div className={styles.wifiItem}>
-                        <div className={styles.label}>无线局域网</div>
+                        <div className={styles.label}>{t('无线局域网')}</div>
                         <Switch defaultChecked={true} value={netValue} onChange={handleNetWorkChange} />
                     </div>
                 </List.Item>
@@ -101,13 +103,6 @@ function WifiNetwork() {
                             </div>
                         </div>
                     </List.Item> : null
-
-                    // <List.Item>
-                    //     <div className={styles.wifiItem}>
-                    //         <div className={styles.label}>{currentItem.name}</div>
-                    //         <Switch defaultChecked={true} value={netValue} onChange={handleNetWorkChange} />
-                    //     </div>
-                    // </List.Item>
                 }
             </List>
             {
@@ -149,15 +144,15 @@ function WifiNetwork() {
 
         >
             <div className={styles.popup}>
-                <div className={styles.tip}>{`输入${currentItem.name}的密码`}</div>
+                <div className={styles.tip}>{t(`输入${currentItem.name}的密码`)}</div>
                 <div className={styles.header}>
-                    <a onClick={handleCancle}>取消</a>
-                    <span className={styles.password}>输入密码</span>
+                    <a onClick={handleCancle}>{t('取消')}</a>
+                    <span className={styles.password}>{t('输入密码')}</span>
                     <span onClick={handleAdd}
-                        className={classNames(styles.enter, { [styles.active]: btnActive })}>加入</span>
+                        className={classNames(styles.enter, { [styles.active]: btnActive })}>{t('加入')}</span>
                 </div>
                 <div className={styles.passwordInput}>
-                    <div className={styles.passwordLabel}>密码</div>
+                    <div className={styles.passwordLabel}>{t('密码')}</div>
                     <Input
                         type='password'
                         value={pswData}

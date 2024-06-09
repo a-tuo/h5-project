@@ -4,8 +4,11 @@ import { CloseCircleFill } from 'antd-mobile-icons'
 import { useState } from 'react';
 import { Form, Input, Stepper, Button, Slider, Switch, DatePicker } from 'antd-mobile'
 import dayjs from 'dayjs';
-import './index.less';
+import styles from './index.module.less';
+import { useTranslation } from 'react-i18next';
+import '../../i18n/config'
 function SystemSettings(props) {
+    const { t } = useTranslation();
     const [form] = Form.useForm();
     const navigate = useNavigate();
     const [pickerVisible, setPickerVisible] = useState(false);
@@ -14,10 +17,9 @@ function SystemSettings(props) {
     }
     const onFinish = () => {
         const values = form.getFieldsValue()
-        console.log(values, '124')
     }
-    return <div className='main'>
-        <NavBar onBack={back}>系统设置</NavBar>
+    return <div className={styles.main}>
+        <NavBar onBack={back}>{t('系统设置')}</NavBar>
         <Form
             mode='card'
             onFinish={onFinish}
@@ -25,29 +27,29 @@ function SystemSettings(props) {
             layout='horizontal'
             footer={
                 <Button block type='submit' color='primary' size='large'>
-                    保存
+                    {t('保存')}
                 </Button>
             }
         >
-            <Form.Header>设备设置</Form.Header>
+            <Form.Header>{t('设备设置')}</Form.Header>
             <Form.Item
                 name='equipmentNumber'
-                label='设备编号'
+                label={t('设备编号')}
                 rules={[{ required: true, message: '设备编号不能为空' }]}
             >
-                <Input placeholder='请输入设备编号' />
+                <Input placeholder={t('请输入设备编号')} />
             </Form.Item>
             <Form.Item
                 name='corporateName'
-                label='公司名称'
-                rules={[{ required: true, message: '公司名称不能为空' }]}
+                label={t('公司名称')}
+                rules={[{ required: true, message: t('公司名称不能为空') }]}
             >
-                <Input placeholder='请输入公司名称' />
+                <Input placeholder={t('请输入公司名称')} />
             </Form.Item>
             <Form.Header></Form.Header>
             <Form.Item
                 name='volume'
-                label='音量'
+                label={t('音量')}
             >
                 <Slider
                     defaultValue={0}
@@ -56,7 +58,7 @@ function SystemSettings(props) {
             </Form.Item>
             <Form.Item
                 name='brightness'
-                label='亮度'
+                label={t('亮度')}
             >
                 <Slider
                     defaultValue={0}
@@ -66,14 +68,14 @@ function SystemSettings(props) {
             <Form.Header></Form.Header>
             <Form.Item
                 name='restart'
-                label='定时重启'
+                label={t('定时重启')}
                 childElementPosition='right'
             >
                 <Switch />
             </Form.Item>
             <Form.Item
                 name='restartTime'
-                label='重启时间'
+                label={t('重启时间')}
                 trigger='onConfirm'
                 arrow={
                     form.getFieldValue('restartTime') ? (
@@ -103,17 +105,17 @@ function SystemSettings(props) {
                     }}
                 >
                     {value =>
-                        value ? dayjs(value).format('YYYY-MM-DD hh:mm:ss') : <div style={{ color: '#C0C4CC' }}>请选择日期</div>
+                        value ? dayjs(value).format('YYYY-MM-DD hh:mm:ss') : <div style={{ color: '#C0C4CC' }}>{t('请选择日期')}</div>
                     }
                 </DatePicker>
             </Form.Item>
             <Form.Item
                 name='sleepTime'
-                label='休眠时间(秒)'
+                label={t('休眠时间(秒)')}
                 childElementPosition='right'
                 rules={[{
                     required: true,
-                    message: '休眠时间不能为空'
+                    message: t('休眠时间不能为空')
                 }]}
             >
                 <Stepper
