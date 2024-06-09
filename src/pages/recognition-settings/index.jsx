@@ -54,9 +54,6 @@ function RecognitionSettings() {
                     min={1}
                     max={120}
                     formatter={value => `${value}s`}
-                    onChange={value => {
-                        console.log(value, typeof value)
-                    }}
                 />
             </Form.Item>
             <Form.Item

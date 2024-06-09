@@ -29,6 +29,7 @@ function SystemSettings(props) {
                 </Button>
             }
         >
+            <Form.Header>设备设置</Form.Header>
             <Form.Item
                 name='equipmentNumber'
                 label='设备编号'
@@ -43,6 +44,7 @@ function SystemSettings(props) {
             >
                 <Input placeholder='请输入公司名称' />
             </Form.Item>
+            <Form.Header></Form.Header>
             <Form.Item
                 name='volume'
                 label='音量'
@@ -61,6 +63,7 @@ function SystemSettings(props) {
                     icon={null}
                 />
             </Form.Item>
+            <Form.Header></Form.Header>
             <Form.Item
                 name='restart'
                 label='定时重启'
@@ -100,7 +103,7 @@ function SystemSettings(props) {
                     }}
                 >
                     {value =>
-                        value ? dayjs(value).format('YYYY-MM-DD') : <div style={{ color: '#C0C4CC' }}>请选择日期</div>
+                        value ? dayjs(value).format('YYYY-MM-DD hh:mm:ss') : <div style={{ color: '#C0C4CC' }}>请选择日期</div>
                     }
                 </DatePicker>
             </Form.Item>
@@ -113,7 +116,10 @@ function SystemSettings(props) {
                     message: '休眠时间不能为空'
                 }]}
             >
-                <Stepper />
+                <Stepper
+                    defaultValue={0}
+                    min={0}
+                    formatter={value => `${value}s`} />
             </Form.Item>
         </Form>
     </div>

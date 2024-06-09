@@ -43,7 +43,7 @@ const transformValue = {
     bh: '编号'
 
 }
-const personList = [
+const personList1 = [
     {
         id: "1",
         img: img1,
@@ -116,6 +116,19 @@ function PersonnelFiles() {
     const [isShowImg, setIsShowImg] = useState(false);
     const [imgsrc, setImgSrc] = useState('');
     const [popVisible, setPopVisble] = useState(false);
+    const [personList, setPersonList] = useState(personList1)
+    const handleDetail = (item) => {
+        const personListTemp = personList.map(i => {
+            if (i.id === item.id) {
+                return {
+                    ...i,
+                    isShowDetail: !item?.isShowDetail,
+                }
+            }
+            return i;
+        })
+        setPersonList(personListTemp)
+    }
     const back = () => {
         navigate(-1)
     }
@@ -133,15 +146,16 @@ function PersonnelFiles() {
     }
     return !isShowImg ? <>
         <div className={styles.main}>
-            <NavBar className={styles.top} onBack={back}>人员档案</NavBar>
+            <NavBar className={styles.top} onBack={back}>识别记录</NavBar>
             <div className={styles.content}>
                 <div className={styles.search}>
-                    <SearchBar placeholder='请输入内容' className={styles.input} />
+                    <SearchBar placeholder='请输入编号/姓名/部门' className={styles.input} />
                     <div className={styles.more} onClick={handleClickMore}>更多</div>
                 </div>
                 <div className={styles.personList}>
                     {
                         personList.map(item => {
+                            const contentTemp = item.isShowDetail ? Object.keys(item.content) : Object.keys(item.content).slice(0, 3);
                             return <Card className={styles.card}>
                                 <div className={styles.cardItem}>
                                     <Avatar src={item.img} className={styles.avatar} onClick={() => { handleClickImg(item.img) }} style={{ '--size': '32px' }} />
@@ -153,20 +167,17 @@ function PersonnelFiles() {
                                         <div className={styles.rightContent}>
                                             <div className={styles.contenta}>
                                                 {
-                                                    Object.keys(item.content).slice(0, 3).map(i => {
+                                                    contentTemp.map(i => {
                                                         return <div className={styles.contentItem} key={i.id}>
                                                             <div className={styles.label}>{`${transformValue[i]}：`}</div>
                                                             <div className={styles.labelContent}>{item.content[i]}</div>
                                                         </div>
                                                     })
                                                 }
-                                                {/* <div>人员编号：{item.number}</div>
-                                        <div>阈值：{item.fz}</div>
-                                        <div>卡号：{item.cardNumber}</div>
-                                        <div>账号：{item.zh}</div>
-                                        <div>时间：{item.time}</div> */}
                                             </div>
-                                            <div className={styles.detail}>详细信息</div>
+                                            <div className={styles.detail} onClick={() => {
+                                                handleDetail(item)
+                                            }}>{item.isShowDetail ? '收起' : '详细信息'}</div>
                                         </div>
 
                                     </div>

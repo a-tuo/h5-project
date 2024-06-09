@@ -1,26 +1,29 @@
 import { List, NavBar } from 'antd-mobile';
 import { navList } from './data';
-import { Link } from 'react-router-dom';
-import './main.less';
+import styles from './main.module.less';
+import { useNavigate } from 'react-router-dom';
 function Main() {
+    const navigate = useNavigate()
     const back = () => {
         console.log('返回')
     }
-    return <div class='main'>
+    return <div className={styles.main}>
         <NavBar onBack={back}>设置</NavBar>
-        <List mode='card'>
+        <div className={styles.content}>
             {
                 navList.map(item => {
-                    return <Link key={item.key} to={item.key} style={{ color: 'rgb(51, 51, 51)', textDecoration: 'none' }}>
-                        <List.Item prefix={item.icon} onClick={() => { }}>
-                            {item.name}
-                        </List.Item>
-                    </Link>
-
+                    return <List key={item.key} mode="card" header={item.name}>
+                        {
+                            item.data.map(listItem => {
+                                return <List.Item key={listItem.key} prefix={listItem.icon} onClick={() => { navigate(listItem.key) }}>
+                                    {listItem.name}
+                                </List.Item>
+                            })
+                        }
+                    </List>
                 })
             }
-        </List>
-
+        </div>
     </div>
 }
 

@@ -17,9 +17,9 @@ function NetworkSettings() {
     return <div className='main'>
         <NavBar className='top' onBack={back}>网络设置</NavBar>
         <div className='content'>
-            <List mode='card' header="系统设置">
-                <List.Item prefix={<BankcardOutline />} onClick={() => { navigate('/wifi-network') }}>wifi设置</List.Item>
-                <List.Item prefix={<SetOutline />} onClick={() => { navigate('/wifi-network') }}>有线设置</List.Item>
+            <List mode='card' header="基本设置">
+                <List.Item prefix={<BankcardOutline />} onClick={() => { navigate('/wifi-network', { state: { name: "wifi设置" } }) }}>wifi设置</List.Item>
+                <List.Item prefix={<SetOutline />} onClick={() => { navigate('/wifi-network', { state: { name: "有线设置" } }) }}>有线设置</List.Item>
             </List>
             <Form
                 mode='card'
@@ -49,19 +49,23 @@ function NetworkSettings() {
                     name="timeout"
                     label="网络通讯超时"
                     childElementPosition='right'>
-                    <Stepper defaultValue={3} min={3} max={20} />
+                    <Stepper
+                        defaultValue={3}
+                        min={3}
+                        max={20}
+                        formatter={value => `${value}s`} />
                 </Form.Item>
                 <Form.Item
                     name="ewmTime"
                     label="二维码通讯超时"
                     childElementPosition='right'>
-                    <Stepper defaultValue={1} min={1} max={120} />
+                    <Stepper defaultValue={1} min={1} max={120} formatter={value => `${value}s`} />
                 </Form.Item>
                 <Form.Item
                     name="heartTime"
                     label="心跳间隔"
                     childElementPosition='right'>
-                    <Stepper defaultValue={1} min={1} max={120} />
+                    <Stepper defaultValue={1} min={1} max={120} formatter={value => `${value}s`} />
                 </Form.Item>
             </Form>
         </div>

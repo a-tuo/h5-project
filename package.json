@@ -10,6 +10,8 @@
     "@testing-library/user-event": "^13.5.0",
     "antd-mobile": "^5.36.1",
     "axios": "^1.7.2",
+    "classname": "^0.0.0",
+    "classnames": "^2.5.1",
     "craco-less": "^3.0.1",
     "dayjs": "^1.11.11",
     "less": "^4.2.0",

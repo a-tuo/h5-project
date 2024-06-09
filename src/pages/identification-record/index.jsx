@@ -40,11 +40,11 @@ const transformValue = {
     cardNumber: "卡号",
     zh: "账号",
     bh: '编号',
-    xf:'消费',
-    ye:'余额',
-    result:'结果'
+    xf: '消费',
+    ye: '余额',
+    result: '结果'
 }
-const personList = [
+const personList1 = [
     {
         id: "1",
         img: img1,
@@ -56,9 +56,9 @@ const personList = [
             zh: "424242",
             bh: '001',
             time: "2023-09-01 23:00:00",
-            xf:'200元',
-            ye:'300元',
-            result:'哈哈哈'
+            xf: '200,000元',
+            ye: '300,00元',
+            result: '测试诗句123123132'
         }
     },
     {
@@ -72,9 +72,9 @@ const personList = [
             zh: "424242",
             bh: '002',
             time: "2023-09-01 23:00:00",
-            xf:'200元',
-            ye:'300元',
-            result:'哈哈哈'
+            xf: '200元',
+            ye: '300元',
+            result: '哈哈哈'
         }
     },
     {
@@ -88,9 +88,9 @@ const personList = [
             zh: "424242",
             bh: '003',
             time: "2023-09-01 23:00:00",
-            xf:'200元',
-            ye:'300元',
-            result:'哈哈哈'
+            xf: '200元',
+            ye: '300元',
+            result: '哈哈哈'
         }
     },
     {
@@ -104,9 +104,9 @@ const personList = [
             zh: "424242",
             bh: '004',
             time: "2023-09-01 23:00:00",
-            xf:'200元',
-            ye:'300元',
-            result:'哈哈哈'
+            xf: '200元',
+            ye: '300元',
+            result: '哈哈哈'
         }
     },
     {
@@ -120,9 +120,9 @@ const personList = [
             zh: "424242",
             bh: '004',
             time: "2023-09-01 23:00:00",
-            xf:'200元',
-            ye:'300元',
-            result:'哈哈哈'
+            xf: '200元',
+            ye: '300元',
+            result: '哈哈哈'
         }
     },
 ]
@@ -131,6 +131,7 @@ function IdentificationRecord() {
     const [isShowImg, setIsShowImg] = useState(false);
     const [imgsrc, setImgSrc] = useState('');
     const [popVisible, setPopVisble] = useState(false);
+    const [personList, setPersonList] = useState(personList1)
     const back = () => {
         navigate(-1)
     }
@@ -146,6 +147,19 @@ function IdentificationRecord() {
     const handleCancle = () => {
         setPopVisble(false)
     }
+
+    const handleDetail = (item) => {
+        const personListTemp = personList.map(i => {
+            if (i.id === item.id) {
+                return {
+                    ...i,
+                    isShowDetail: !item?.isShowDetail,
+                }
+            }
+            return i;
+        })
+        setPersonList(personListTemp)
+    }
     return !isShowImg ? <>
         <div className={styles.main}>
             <NavBar className={styles.top} onBack={back}>识别记录</NavBar>
@@ -157,6 +171,7 @@ function IdentificationRecord() {
                 <div className={styles.personList}>
                     {
                         personList.map(item => {
+                            const contentTemp = item.isShowDetail ? Object.keys(item.content) : Object.keys(item.content).slice(0, 3);
                             return <Card className={styles.card}>
                                 <div className={styles.cardItem}>
                                     <Avatar src={item.img} className={styles.avatar} onClick={() => { handleClickImg(item.img) }} style={{ '--size': '32px' }} />
@@ -168,20 +183,17 @@ function IdentificationRecord() {
                                         <div className={styles.rightContent}>
                                             <div className={styles.contenta}>
                                                 {
-                                                    Object.keys(item.content).slice(0, 3).map(i => {
+                                                    contentTemp.map(i => {
                                                         return <div className={styles.contentItem} key={i.id}>
                                                             <div className={styles.label}>{`${transformValue[i]}：`}</div>
                                                             <div className={styles.labelContent}>{item.content[i]}</div>
                                                         </div>
                                                     })
                                                 }
-                                                {/* <div>人员编号：{item.number}</div>
-                                        <div>阈值：{item.fz}</div>
-                                        <div>卡号：{item.cardNumber}</div>
-                                        <div>账号：{item.zh}</div>
-                                        <div>时间：{item.time}</div> */}
                                             </div>
-                                            <div className={styles.detail}>详细信息</div>
+                                            <div className={styles.detail} onClick={() => {
+                                                handleDetail(item)
+                                            }}>{item.isShowDetail ? '收起' : '详细信息'}</div>
                                         </div>
 
                                     </div>
