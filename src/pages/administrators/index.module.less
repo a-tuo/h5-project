@@ -7,4 +7,84 @@
         z-index: 999;
         background-color: #F2F6FC;
     }
+    .content{
+        padding: 12px;
+        height: calc(100% - 45px);
+        background-color: #F2F6FC;
+        .search{
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            .input{
+                flex: 1;
+                margin-right: 15px;
+            }
+        }
+        .more{
+            border: 1px solid rgb(217, 236, 255);
+            padding: 0 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            color:#409EFF;
+            height: 32px;
+            line-height: 32px;
+            background-color: #fff;
+        }
+    }
+    .cardContent{
+        margin-bottom: 20px;
+    }
+    .contentItem{
+        display: flex;
+        height: 24px;
+        line-height: 24px;
+        font-size: 15px;
+        .label{
+            width: 70px;
+        }
+    }
+    .listContent{
+        display: flex;
+        justify-content: space-between;
+    }
+}
+.popup{
+    background-color: #F2F6FC;
+    height: 100%;
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .popupContent{
+        display: flex;
+    }
+    .popupItem{
+        margin-right: 15px;
+    }
+    .popupItemIcon{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+    .popupItemText{
+        text-align: center;
+        color: #909399;
+    }
+    .cancle{
+        width: 100%;
+        background-color: #fff;
+        font-weight: bold;
+        height: 32px;
+        border-radius: 16px;
+        text-align: center;
+        line-height: 32px;
+    }
 }

@@ -1,9 +1,10 @@
 import styles from './index.module.less';
 import { useNavigate } from 'react-router-dom';
-import { NavBar, List, Switch, Popup, Input, Toast } from 'antd-mobile';
+import { NavBar, List, Switch, Popup, Input, Toast, Button } from 'antd-mobile';
 import { LockFill } from 'antd-mobile-icons'
 import { useLocation } from 'react-router-dom';
 import wifi from './asset/wifi.png';
+import detail from './asset/detail.png'
 import { useMemo, useState } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +17,7 @@ function WifiNetwork() {
     const [popVisible, setPopVisble] = useState(false);
     const [currentItem, setCurrentItem] = useState({});
     const [netValue, setNetValue] = useState(true);
-    const [currentNetItem,setCurrentNetItem] = useState({});
+    const [currentNetItem, setCurrentNetItem] = useState({});
     const { t } = useTranslation();
     const btnActive = useMemo(() => {
         return pswData?.length >= 8 ? true : false
@@ -83,6 +84,21 @@ function WifiNetwork() {
             setPswData('')
         }
     }
+
+    const handleDetail = (e,item) => {
+        e.stopPropagation()
+        navigate('/wifi-network-detail', { state: { list: item } })
+    }
+
+    const renderRight = (item) => {
+        return <div className={styles.netItemListIcon}>
+            <div style={{ marginRight: "10px" }}><LockFill /></div>
+            <img src={wifi} style={{ height: "16px", width: '17px', marginRight: "10px" }} />
+            <img src={detail} onClick={(e) => {
+                handleDetail(e,item)
+            }} style={{ height: "18px", width: '18px' }} />
+        </div>
+    }
     return <>
         <div className={styles.main}>
             <NavBar className='top' onBack={back}>{location.state.name}</NavBar>
@@ -97,26 +113,25 @@ function WifiNetwork() {
                     Object.keys(currentNetItem)?.length ? <List.Item>
                         <div className={styles.netItemList}>
                             <div>{currentNetItem.name}</div>
-                            <div className={styles.netItemListIcon}>
-                                <div style={{ marginRight: "10px" }}><LockFill /></div>
-                                <img src={wifi} style={{ height: "16px", width: '17px' }} />
-                            </div>
+                            {renderRight(currentNetItem)}
                         </div>
                     </List.Item> : null
                 }
             </List>
             {
-                netValue && <List mode='card' header="网络">
+                netValue && <List mode='card' header={
+                    <div className={styles.header}>
+                        <div>网络</div>
+                        <Button size='small' color='primary'>刷新</Button>
+                    </div>
+                }>
                     {
                         networkList.map(item => {
                             return <div key={item.key}>
                                 <List.Item onClick={() => { handleClickItem(item) }} arrow={null}>
                                     <div className={styles.netItemList}>
                                         <div>{item.name}</div>
-                                        <div className={styles.netItemListIcon}>
-                                            <div style={{ marginRight: "10px" }}><LockFill /></div>
-                                            <img src={wifi} style={{ height: "16px", width: '17px' }} />
-                                        </div>
+                                        {renderRight(item)}
                                     </div>
                                 </List.Item>
                             </div>

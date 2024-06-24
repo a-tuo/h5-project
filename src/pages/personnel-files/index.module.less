@@ -1,6 +1,39 @@
 .main{
     height: 100%;
     background-color: #F2F6FC;
+    .filterData{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        .filterContent{
+            display: flex;
+        }
+        .filterItem{
+            border: 1px solid rgb(217, 236, 255);
+            padding: 0 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            // color:#409EFF;
+            color: #ccc;
+            height: 32px;
+            line-height: 32px;
+            background-color: #fff;
+            margin-right: 10px;
+        }
+        .active{
+            color:#409EFF;
+        }
+    }
+    .more{
+        border: 1px solid rgb(217, 236, 255);
+        padding: 0 12px;
+        border-radius: 12px;
+        font-size: 14px;
+        color:#409EFF;
+        height: 32px;
+        line-height: 32px;
+        background-color: #fff;
+    }
     .top{
         position: sticky;
         top: 0;
@@ -10,6 +43,18 @@
     .rightContent{
         display: flex;
         position: relative;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+    .delete{
+        align-content: flex-end;
+        line-height: 24px;
+        border: 1px solid #e9b6b6;
+        padding: 0 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        color:red;
+        height: 24px;
     }
     .detail{
         position: absolute;
@@ -17,6 +62,7 @@
         right: 0;
         line-height: 24px;
         color: #409EFF;
+        cursor: pointer;
     }
     .content{
         padding: 12px;
@@ -25,23 +71,13 @@
         .search{
             display: flex;
             justify-content: space-between;
+            margin-bottom: 20px;
             .input{
                 flex: 1;
-                margin-right: 15px;
-            }
-            .more{
-                border: 1px solid rgb(217, 236, 255);
-                padding: 0 12px;
-                border-radius: 12px;
-                font-size: 14px;
-                color:#409EFF;
-                height: 32px;
-                line-height: 32px;
-                background-color: #fff;
             }
         }
         .personList{
-            height: calc(100% - 52px);
+            height: calc(100% - 100px);
             overflow: auto;
         }
         .contentItem{
@@ -63,9 +99,30 @@
             height: 20px;
         }
     }
-    .input{
-        margin-bottom: 20px;
+    .dataPicker{
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+        .dataPickerItem{
+                text-align: center;
+                border-radius: 12px;
+                font-size: 14px;
+                width: 50%;
+                color:#909399;
+                height: 32px;
+                line-height: 32px;
+                margin-right: 10px;
+                background-color: #fff;
+        }
+        .dataPickerItemActive{
+            color: #409eff;
+            background: #ecf5ff;
+            border: 1px solid #b3d8ff;
+        }
     }
+    // .input{
+    //     margin-bottom: 20px;
+    // }
     .list{
         height: 50px;
         display: flex;
@@ -87,6 +144,7 @@
         }
         .cardItem{
             display: flex;
+            width: 100%;
             .right{
                 width: 100%;
             }

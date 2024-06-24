@@ -1,33 +1,21 @@
 import styles from './index.module.less';
-import { NavBar, SearchBar, Popup, Card, Avatar, Image } from 'antd-mobile';
+import { NavBar, SearchBar, Popup, Card, Avatar, Image,DatePicker } from 'antd-mobile';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import img4 from './assets/4.png';
 import img1 from './assets/1.png';
 import img5 from './assets/5.png';
 import img3 from './assets/3.png';
+import dayjs from 'dayjs';
+import classNames from 'classnames';
 import {
     FolderOutline,
-    AddSquareOutline,
-    DownlandOutline
+    MoreOutline,
+    SearchOutline,
 } from 'antd-mobile-icons';
 import { useTranslation } from 'react-i18next';
 import '../../i18n/config'
 const data = [
-    {
-        key: 'add',
-        text: '增加',
-        icon: () => {
-            return <AddSquareOutline />
-        }
-    },
-    {
-        key: 'import',
-        text: '导入',
-        icon: () => {
-            return <DownlandOutline />
-        }
-    },
     {
         key: 'export',
         text: '导出',
@@ -46,6 +34,25 @@ const transformValue = {
     ye: '余额',
     result: '结果'
 }
+const transformNum = {
+    number: '人员编号',
+    name: '人员姓名',
+    time: '时间',
+}
+const topData = [
+    {
+        key: 'number',
+        type: 'input',
+    },
+    {
+        key: 'name',
+        type: 'input',
+    },
+    {
+        key: 'time',
+        type: 'dataPicker',
+    },
+]
 const personList1 = [
     {
         id: "1",
@@ -128,15 +135,42 @@ const personList1 = [
         }
     },
 ]
+const tabData = [
+    {
+        key: 'startTime',
+        name: '起始时间'
+    },
+    {
+        key: 'endTime',
+        name: '终止时间'
+    }
+]
 function IdentificationRecord() {
     const { t } = useTranslation();
     const navigate = useNavigate()
     const [isShowImg, setIsShowImg] = useState(false);
     const [imgsrc, setImgSrc] = useState('');
     const [popVisible, setPopVisble] = useState(false);
-    const [personList, setPersonList] = useState(personList1)
+    const [personList, setPersonList] = useState(personList1);
+    const [visible, setVisible] = useState(false);
+    const [timePicker, setTimePicker] = useState('');
+    const [timeData, setTimeData] = useState({
+        startTime: "",
+        endTime: "",
+    })
+    const [active, setActive] = useState({
+        key: 'number',
+        type: 'input',
+    },)
     const back = () => {
         navigate(-1)
+    }
+    const handleConfirm = (data) => {
+        setTimeData({
+            ...timeData,
+            [timePicker]: dayjs(data).format('YYYY-MM-DD hh:mm:ss')
+        })
+        console.log(timePicker, 'timePicker', dayjs(data).format('YYYY-MM-DD hh:mm:ss'), 'data')
     }
     const handleClickImg = (item) => {
         setIsShowImg(true)
@@ -151,30 +185,69 @@ function IdentificationRecord() {
         setPopVisble(false)
     }
 
-    const handleDetail = (item) => {
-        const personListTemp = personList.map(i => {
-            if (i.id === item.id) {
-                return {
-                    ...i,
-                    isShowDetail: !item?.isShowDetail,
-                }
-            }
-            return i;
-        })
-        setPersonList(personListTemp)
+    const handleClick = (item) => {
+        setActive(item)
     }
+    const handleDataPicker = (item) => {
+        setVisible(true)
+        setTimePicker(item);
+    }
+    const renderSearch = () => {
+        if (active.type === 'input') {
+            return <SearchBar placeholder={t(`请输入${transformNum[active.key]}`)} className={styles.input} />
+        }
+        else if (active.type === 'dataPicker') {
+            return <div className={styles.dataPicker}>
+                {
+                    tabData.map(item => {
+                        return <>
+                            <div className={classNames(styles.dataPickerItem, { [styles.dataPickerItemActive]: timeData[item.key] })} onClick={() => {
+                                handleDataPicker(item.key)
+                            }} key={item.key}>{
+                                    timeData[item.key] || item.name}</div>
+                        </>
+                    })
+                }
+                <div className={styles.more}>{<SearchOutline />}</div>
+            </div>
+        }
+    }
+    // const handleDetail = (item) => {
+    //     const personListTemp = personList.map(i => {
+    //         if (i.id === item.id) {
+    //             return {
+    //                 ...i,
+    //                 isShowDetail: !item?.isShowDetail,
+    //             }
+    //         }
+    //         return i;
+    //     })
+    //     setPersonList(personListTemp)
+    // }
     return !isShowImg ? <>
         <div className={styles.main}>
             <NavBar className={styles.top} onBack={back}>{t('识别记录')}</NavBar>
             <div className={styles.content}>
+                <div className={styles.filterData}>
+                    <div className={styles.filterContent}>
+                        {
+                            topData.map(item => {
+                                return <div key={item.key} onClick={() => { handleClick(item) }} className={classNames(styles.filterItem, { [styles.active]: active.key === item.key })}>{transformNum[item.key]}</div>
+                            })
+                        }
+                    </div>
+                    <div className={styles.more} onClick={handleClickMore}>{<MoreOutline />}</div>
+                </div>
                 <div className={styles.search}>
-                    <SearchBar placeholder={t('请输入编号/姓名/部门')} className={styles.input} />
-                    <div className={styles.more} onClick={handleClickMore}>{t('更多')}</div>
+                    {
+                        renderSearch()
+                    }
+                    {/* <SearchBar placeholder={t(`请输入${transformNum[active.key]}`)} className={styles.input} /> */}
+                    {/* <div className={styles.more} onClick={handleClickMore}>{t('更多')}</div> */}
                 </div>
                 <div className={styles.personList}>
                     {
                         personList.map(item => {
-                            const contentTemp = item.isShowDetail ? Object.keys(item.content) : Object.keys(item.content).slice(0, 3);
                             return <Card className={styles.card}>
                                 <div className={styles.cardItem}>
                                     <Avatar src={item.img} className={styles.avatar} onClick={() => { handleClickImg(item.img) }} style={{ '--size': '32px' }} />
@@ -186,7 +259,7 @@ function IdentificationRecord() {
                                         <div className={styles.rightContent}>
                                             <div className={styles.contenta}>
                                                 {
-                                                    contentTemp.map(i => {
+                                                    Object.keys(item.content).map(i => {
                                                         return <div className={styles.contentItem} key={i.id}>
                                                             <div className={styles.label}>{t(`${transformValue[i]}：`)}</div>
                                                             <div className={styles.labelContent}>{t(item.content[i])}</div>
@@ -194,14 +267,10 @@ function IdentificationRecord() {
                                                     })
                                                 }
                                             </div>
-                                            <div className={styles.detail} onClick={() => {
-                                                handleDetail(item)
-                                            }}>{item.isShowDetail ? t('收起') : t('详细信息')}</div>
                                         </div>
 
                                     </div>
                                 </div>
-
                             </Card>
                         })
                     }
@@ -238,6 +307,16 @@ function IdentificationRecord() {
                 <div className={styles.cancle} onClick={handleCancle}>取消</div>
             </div>
         </Popup>
+        <DatePicker
+            title='时间选择'
+            visible={visible}
+            precision='second'
+            onClose={() => {
+                setVisible(false)
+            }}
+
+            onConfirm={handleConfirm}
+        />
     </> : <div className={styles.img}>
         <NavBar className={styles.top} onBack={() => { setIsShowImg(false) }}>人员头像</NavBar>
         <div className={styles.imgContent}>

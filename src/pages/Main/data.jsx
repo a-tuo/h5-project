@@ -13,7 +13,7 @@ import {
 const navList = [
     {
         id: "basic",
-        name: "基本设置",
+        name: "",
         data: [
             {
                 key: "/system-settings",

@@ -23,4 +23,18 @@ module.exports = {
     babel: {
         plugins: [["@babel/plugin-proposal-decorators", { legacy: true }]]
     },
+    devServer: {
+        proxy: {
+            '/api': {
+                target: "http://47.98.235.103:6066",
+                changeOrigin: true,
+                secure: false,
+                // rewrite: (path) => path.replace(/^\/api/, ''),
+                // onProxyReq(proxyReq) {
+                //     // 设置Cookie
+                //     proxyReq.setHeader('Cookie', devProxyConfig.getCookie(DATA_ENV));
+                // },
+            },
+        },
+    }
 };

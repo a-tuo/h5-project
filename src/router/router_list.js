@@ -10,6 +10,11 @@ import SystemLog from '../pages/system-log/index';
 import SystemMaintenance from '../pages/system-maintenance/index';
 import AboutDevices from '../pages/about-devices/index';
 import WifiNetwork from '../pages/wifi-network';
+import WifiNetworkDetail from '../pages/wifi-network-detail/index';
+import NthernetNetwork from '../pages/nthernet-network/index';
+import NthernetNetworkDetail from '../pages/nthernet-network-detail/index';
+import MenuPermission from '../pages/menu-permission/index';
+import Multilingual from '../pages/multi-lingual';
 const routerList = [
     {
         path: '/',
@@ -56,8 +61,28 @@ const routerList = [
         element: <AboutDevices />
     },
     {
-        path:'/wifi-network',
-        element:<WifiNetwork/>
+        path: '/wifi-network',
+        element: <WifiNetwork />
+    },
+    {
+        path: '/wifi-network-detail',
+        element: <WifiNetworkDetail />
+    },
+    {
+        path: '/ethernet-network',
+        element: <NthernetNetwork />
+    },
+    {
+        path: '/ethernet-network-detail',
+        element: <NthernetNetworkDetail />
+    },
+    {
+        path: '/menu-permission',
+        element: <MenuPermission />
+    },
+    {
+        path: '/multi-lingual',
+        element: <Multilingual />
     }
 ];
 
