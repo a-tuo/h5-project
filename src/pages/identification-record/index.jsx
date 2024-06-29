@@ -1,5 +1,5 @@
 import styles from './index.module.less';
-import { NavBar, SearchBar, Popup, Card, Avatar, Image,DatePicker } from 'antd-mobile';
+import { NavBar, SearchBar, Popup, Card, Avatar, Image, DatePicker, Button } from 'antd-mobile';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import img4 from './assets/4.png';
@@ -14,11 +14,19 @@ import {
     SearchOutline,
 } from 'antd-mobile-icons';
 import { useTranslation } from 'react-i18next';
-import '../../i18n/config'
+import '../../i18n/config';
+
 const data = [
     {
         key: 'export',
-        text: '导出',
+        text: '导出明细',
+        icon: () => {
+            return <FolderOutline />
+        }
+    },
+    {
+        key: 'export',
+        text: '导出识别图片',
         icon: () => {
             return <FolderOutline />
         }
@@ -212,38 +220,28 @@ function IdentificationRecord() {
             </div>
         }
     }
-    // const handleDetail = (item) => {
-    //     const personListTemp = personList.map(i => {
-    //         if (i.id === item.id) {
-    //             return {
-    //                 ...i,
-    //                 isShowDetail: !item?.isShowDetail,
-    //             }
-    //         }
-    //         return i;
-    //     })
-    //     setPersonList(personListTemp)
-    // }
     return !isShowImg ? <>
         <div className={styles.main}>
             <NavBar className={styles.top} onBack={back}>{t('识别记录')}</NavBar>
             <div className={styles.content}>
-                <div className={styles.filterData}>
-                    <div className={styles.filterContent}>
+                <div className={styles.search}>
+                    <SearchBar placeholder={t('请输入工号/姓名/卡号')} className={styles.input} />
+                    <Button color='primary' size='small'>搜索</Button>
+                </div>
+                <div className={styles.search}>
+                    <div className={styles.dataPicker}>
                         {
-                            topData.map(item => {
-                                return <div key={item.key} onClick={() => { handleClick(item) }} className={classNames(styles.filterItem, { [styles.active]: active.key === item.key })}>{transformNum[item.key]}</div>
+                            tabData.map(item => {
+                                return <>
+                                    <div className={classNames(styles.dataPickerItem, { [styles.dataPickerItemActive]: timeData[item.key] })} onClick={() => {
+                                        handleDataPicker(item.key)
+                                    }} key={item.key}>{
+                                            timeData[item.key] || item.name}</div>
+                                </>
                             })
                         }
                     </div>
-                    <div className={styles.more} onClick={handleClickMore}>{<MoreOutline />}</div>
-                </div>
-                <div className={styles.search}>
-                    {
-                        renderSearch()
-                    }
-                    {/* <SearchBar placeholder={t(`请输入${transformNum[active.key]}`)} className={styles.input} /> */}
-                    {/* <div className={styles.more} onClick={handleClickMore}>{t('更多')}</div> */}
+                    <Button color='primary' size='small' onClick={handleClickMore}>更多</Button>
                 </div>
                 <div className={styles.personList}>
                     {
@@ -254,7 +252,7 @@ function IdentificationRecord() {
                                     <div className={styles.right}>
                                         <div className={styles.header}>
                                             <div className={styles.name}>{t(`${item.name} | ${item.department}`)}</div>
-                                            <div className={styles.enter}>{t('录入')}</div>
+                                            <div className={styles.enter}>{t('重传')}</div>
                                         </div>
                                         <div className={styles.rightContent}>
                                             <div className={styles.contenta}>

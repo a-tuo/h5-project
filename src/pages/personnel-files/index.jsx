@@ -1,5 +1,6 @@
 import styles from './index.module.less';
-import { NavBar, SearchBar, Popup, Card, Avatar, Image,DatePicker } from 'antd-mobile';
+import { NavBar, Button, SearchBar, Popup, Card, Avatar, Image, DatePicker } from 'antd-mobile';
+import { Select } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import img4 from './assets/4.png';
@@ -17,12 +18,27 @@ import {
 } from 'antd-mobile-icons';
 import { useTranslation } from 'react-i18next';
 import '../../i18n/config'
+
 const data = [
     {
         key: 'add',
         text: '增加',
         icon: () => {
             return <AddSquareOutline />
+        }
+    },
+    {
+        key: 'import',
+        text: '导入',
+        icon: () => {
+            return <DownlandOutline />
+        }
+    },
+    {
+        key: 'export',
+        text: '导出',
+        icon: () => {
+            return <FolderOutline />
         }
     },
     {
@@ -69,20 +85,20 @@ const transformNum = {
     name: '人员姓名',
     time: '时间',
 }
-const topData = [
-    {
-        key: 'number',
-        type: 'input',
-    },
-    {
-        key: 'name',
-        type: 'input',
-    },
-    {
-        key: 'time',
-        type: 'dataPicker',
-    },
-]
+// const topData = [
+//     {
+//         key: 'number',
+//         type: 'input',
+//     },
+//     {
+//         key: 'name',
+//         type: 'input',
+//     },
+//     {
+//         key: 'time',
+//         type: 'dataPicker',
+//     },
+// ]
 const personList1 = [
     {
         id: "1",
@@ -175,7 +191,26 @@ const tabData = [
         name: '终止时间'
     }
 ]
+const departmentData = [
+    {
+        key: 'all',
+        value: '所有'
+    },
+    {
+        key: 'department1',
+        value: '部门1'
+    },
+    {
+        key: 'department2',
+        value: '部门2'
+    },
+    {
+        key: 'department3',
+        value: '部门3'
+    },
+]
 function IdentificationRecord() {
+    const { Option } = Select
     const { t } = useTranslation();
     const navigate = useNavigate()
     const [isShowImg, setIsShowImg] = useState(false);
@@ -184,6 +219,7 @@ function IdentificationRecord() {
     const [personList, setPersonList] = useState(personList1);
     const [visible, setVisible] = useState(false);
     const [timePicker, setTimePicker] = useState('');
+    const [selectValue, setSelectValue] = useState('all')
     const [timeData, setTimeData] = useState({
         startTime: "",
         endTime: "",
@@ -242,23 +278,15 @@ function IdentificationRecord() {
             </div>
         }
     }
-    // const handleDetail = (item) => {
-    //     const personListTemp = personList.map(i => {
-    //         if (i.id === item.id) {
-    //             return {
-    //                 ...i,
-    //                 isShowDetail: !item?.isShowDetail,
-    //             }
-    //         }
-    //         return i;
-    //     })
-    //     setPersonList(personListTemp)
-    // }
+
+    const handleChangeDepart = (value) => {
+        setSelectValue(value);
+    }
     return !isShowImg ? <>
         <div className={styles.main}>
-            <NavBar className={styles.top} onBack={back}>{t('识别记录')}</NavBar>
+            <NavBar className={styles.top} onBack={back}>{t('人员档案')}</NavBar>
             <div className={styles.content}>
-                <div className={styles.filterData}>
+                {/* <div className={styles.filterData}>
                     <div className={styles.filterContent}>
                         {
                             topData.map(item => {
@@ -267,24 +295,35 @@ function IdentificationRecord() {
                         }
                     </div>
                     <div className={styles.more} onClick={handleClickMore}>{<MoreOutline />}</div>
+                </div> */}
+                <div className={styles.search}>
+                    <SearchBar placeholder={t('请输入工号/姓名/卡号')} className={styles.input} />
+                    <Button color='primary' size='small'>搜索</Button>
                 </div>
                 <div className={styles.search}>
-                    {
-                        renderSearch()
-                    }
-                    {/* <SearchBar placeholder={t(`请输入${transformNum[active.key]}`)} className={styles.input} /> */}
-                    {/* <div className={styles.more} onClick={handleClickMore}>{t('更多')}</div> */}
+                    <Select className={styles.input} value={selectValue} onChange={handleChangeDepart}>
+                        {
+                            departmentData.map(i => {
+                                return <Option key={i.key} value={i.key}>{i.value}</Option>
+                            })
+                        }
+                    </Select>
+                    <Button color='primary' size='small' onClick={handleClickMore}>更多</Button>
                 </div>
                 <div className={styles.personList}>
                     {
                         personList.map(item => {
                             return <Card className={styles.card}>
                                 <div className={styles.cardItem}>
-                                    <Avatar src={item.img} className={styles.avatar} onClick={() => { handleClickImg(item.img) }} style={{ '--size': '32px' }} />
+                                    <div className={styles.avatarItem}>
+                                        <Avatar src={item.img} className={styles.avatar} onClick={() => { handleClickImg(item.img) }} style={{ '--size': '53px' }} />
+                                        {/* <Button>录入</Button> */}
+                                        <div className={styles.enter}>{t('录入')}</div>
+                                    </div>
                                     <div className={styles.right}>
                                         <div className={styles.header}>
                                             <div className={styles.name}>{t(`${item.name} | ${item.department}`)}</div>
-                                            <div className={styles.enter}>{t('录入')}</div>
+                                            <div className={styles.enter}>{t('编辑')}</div>
                                         </div>
                                         <div className={styles.rightContent}>
                                             <div className={styles.contenta}>
@@ -297,7 +336,7 @@ function IdentificationRecord() {
                                                     })
                                                 }
                                             </div>
-                                            <div className={styles.delete}>删除</div> 
+                                            <div className={styles.delete}>删除</div>
                                         </div>
 
                                     </div>

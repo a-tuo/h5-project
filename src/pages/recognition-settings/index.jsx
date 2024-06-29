@@ -27,6 +27,9 @@ function RecognitionSettings() {
             form={form}
             layout='horizontal'
             onFinish={onFinish}
+            style={{
+                "--prefix-width":'170px'
+            }}
             initialValues={{
                 light: "good",
                 recognition: 0,
@@ -35,14 +38,14 @@ function RecognitionSettings() {
                 recognition: 0,
                 photo: true
             }}>
-            <Form.Header>{t('环境光线')}</Form.Header>
-            <Form.Item name="light">
-                <Radio.Group>
+            <Form.Item name="light" label="环境光线较好" valuePropName='checked' childElementPosition="right">
+                <Switch />
+                {/* <Radio.Group>
                     <Space direction='vertical'>
                         <Radio value='good' icon={checked => renderRadio(checked)}>{t('较好')}</Radio>
                         <Radio value='common' icon={checked => renderRadio(checked)}>{t('一般')}</Radio>
                     </Space>
-                </Radio.Group>
+                </Radio.Group> */}
             </Form.Item>
             <Form.Header />
             <Form.Item
@@ -55,11 +58,11 @@ function RecognitionSettings() {
                     }}
                 />
             </Form.Item>
-            <Form.Header>{t('时间设置(s)')}</Form.Header>
+            <Form.Header />
             <Form.Item
                 name="result"
                 childElementPosition='right'
-                label={t('结果显示延时')}>
+                label={t('结果显示延时(秒)')}>
                 <Stepper
                     min={1}
                     max={120}
@@ -68,7 +71,7 @@ function RecognitionSettings() {
             <Form.Item
                 name="repeat"
                 childElementPosition='right'
-                label={t('重复识别间隔')}>
+                label={t('重复识别间隔(秒)')}>
                 <Stepper
                     min={0}
                     max={10000}
@@ -77,12 +80,13 @@ function RecognitionSettings() {
             <Form.Item
                 name="recognition"
                 childElementPosition='right'
-                label={t('任意识别间隔')}>
+                label={t('任意识别间隔(秒)')}>
                 <Stepper
                     min={0}
                     max={10000}
                 />
             </Form.Item>
+            <Form.Header />
             <Form.Item name="photo" label={t('抓拍图片')} childElementPosition='right' valuePropName="checked">
                 <Switch />
             </Form.Item>

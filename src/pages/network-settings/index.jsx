@@ -36,12 +36,15 @@ function NetworkSettings() {
                 onFinish={onFinish}
                 form={form}
                 layout='horizontal'
+                style={{
+                    "--prefix-width":'170px'
+                }}
                 initialValues={{
                     http: '1',
                     timeout: 3,
                     ewmTime: 1,
                     heartTime: 1,
-                    ip: 'http://192.168.0.100:6060'
+                    ip: 'https://192.168.0.100:80'
                 }}>
                 {/* <Form.Header>{t('协议类型')}</Form.Header>
                 <Form.Item name='http' required>
@@ -60,10 +63,10 @@ function NetworkSettings() {
                 <Form.Item name='ip' required>
                     <Input placeholder='请输入服务器地址' />
                 </Form.Item>
-                <Form.Header>{t('超时时间(秒)')}</Form.Header>
+                <Form.Header></Form.Header>
                 <Form.Item
                     name="timeout"
-                    label={t('网络通讯超时')}
+                    label={t('网络通讯超时(秒)')}
                     childElementPosition='right'>
                     <Stepper
                         min={3}
@@ -71,13 +74,13 @@ function NetworkSettings() {
                 </Form.Item>
                 <Form.Item
                     name="ewmTime"
-                    label={t('二维码通讯超时')}
+                    label={t('二维码通讯超时(秒)')}
                     childElementPosition='right'>
                     <Stepper min={1} max={120} />
                 </Form.Item>
                 <Form.Item
                     name="heartTime"
-                    label={t('心跳间隔')}
+                    label={t('心跳间隔(秒)')}
                     childElementPosition='right'>
                     <Stepper min={1} max={120} />
                 </Form.Item>

@@ -15,6 +15,8 @@ import NthernetNetwork from '../pages/nthernet-network/index';
 import NthernetNetworkDetail from '../pages/nthernet-network-detail/index';
 import MenuPermission from '../pages/menu-permission/index';
 import Multilingual from '../pages/multi-lingual';
+import WifiNetworkDetailAuto from '../pages/wifi-network-detail-auto/index';
+import TimePeriodSettingAdd from '../pages/time-period-setting-add/index';
 const routerList = [
     {
         path: '/',
@@ -35,6 +37,10 @@ const routerList = [
     {
         path: '/time-period-setting',
         element: <TimePeriodSetting />
+    },
+    {
+        path: '/time-period-setting-add',
+        element: <TimePeriodSettingAdd />
     },
     {
         path: '/personnel-files',
@@ -67,6 +73,10 @@ const routerList = [
     {
         path: '/wifi-network-detail',
         element: <WifiNetworkDetail />
+    },
+    {
+        path: '/wifi-network-detail-auto',
+        element: <WifiNetworkDetailAuto />
     },
     {
         path: '/ethernet-network',

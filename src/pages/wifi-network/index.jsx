@@ -8,6 +8,7 @@ import detail from './asset/detail.png'
 import { useMemo, useState } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import arrow from '../../images/arrow.png';
 import '../../i18n/config'
 
 function WifiNetwork() {
@@ -52,6 +53,10 @@ function WifiNetwork() {
         },
     ]
 
+    const networkListTemp = useMemo(() => {
+        return networkList.filter(i => i.key !== currentItem.key)
+    }, [currentItem])
+
     const handleCancle = () => {
         setPopVisble(false)
         setPswData('')
@@ -85,7 +90,7 @@ function WifiNetwork() {
         }
     }
 
-    const handleDetail = (e,item) => {
+    const handleDetail = (e, item) => {
         e.stopPropagation()
         navigate('/wifi-network-detail', { state: { list: item } })
     }
@@ -95,7 +100,7 @@ function WifiNetwork() {
             <div style={{ marginRight: "10px" }}><LockFill /></div>
             <img src={wifi} style={{ height: "16px", width: '17px', marginRight: "10px" }} />
             <img src={detail} onClick={(e) => {
-                handleDetail(e,item)
+                handleDetail(e, item)
             }} style={{ height: "18px", width: '18px' }} />
         </div>
     }
@@ -126,11 +131,16 @@ function WifiNetwork() {
                     </div>
                 }>
                     {
-                        networkList.map(item => {
+                        networkListTemp.map(item => {
                             return <div key={item.key}>
                                 <List.Item onClick={() => { handleClickItem(item) }} arrow={null}>
                                     <div className={styles.netItemList}>
-                                        <div>{item.name}</div>
+                                        <div className={styles.currentItem}>
+                                            {/* {
+                                                currentNetItem.key === item.key ? <img className={styles.currentImg} src={arrow} /> : <div className={styles.currentImg}/>
+                                            } */}
+                                            {item.name}
+                                        </div>
                                         {renderRight(item)}
                                     </div>
                                 </List.Item>

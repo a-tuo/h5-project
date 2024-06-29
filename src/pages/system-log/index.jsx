@@ -1,6 +1,6 @@
 import styles from './index.module.less';
 import { useNavigate } from 'react-router-dom';
-import { NavBar, SearchBar, Card, Popup, DatePicker } from 'antd-mobile';
+import { NavBar, SearchBar, Card, Popup, DatePicker, Button } from 'antd-mobile';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import classNames from 'classnames';
@@ -108,6 +108,9 @@ function SystemLog() {
     const handleCancle = () => {
         setPopVisble(false)
     }
+    const handleExport = () => {
+
+    }
     const handleClick = (item) => {
         setActive(item)
     }
@@ -146,7 +149,29 @@ function SystemLog() {
         <div className={styles.main}>
             <NavBar className='top' onBack={back}>{t('系统日志')}</NavBar>
             <div className={styles.content}>
-                <div className={styles.filterData}>
+                <div className={styles.search}>
+                    <SearchBar placeholder={t('请输入工号/姓名/卡号')} className={styles.input} />
+                    <Button color='primary' size='small'>搜索</Button>
+                </div>
+                <div className={styles.search}>
+                    <div className={styles.dataPicker}>
+                        {
+                            tabData.map(item => {
+                                return <>
+                                    <div className={classNames(styles.dataPickerItem, { [styles.dataPickerItemActive]: timeData[item.key] })} onClick={() => {
+                                        handleDataPicker(item.key)
+                                    }} key={item.key}>{
+                                            timeData[item.key] || item.name}</div>
+                                </>
+                            })
+                        }
+                    </div>
+                    <Button color='primary' size='small' onClick={
+                        // handleClickMore
+                        handleExport
+                    }>导出</Button>
+                </div>
+                {/* <div className={styles.filterData}>
                     <div className={styles.filterContent}>
                         {
                             topData.map(item => {
@@ -160,7 +185,7 @@ function SystemLog() {
                     {
                         renderSearch()
                     }
-                </div>
+                </div> */}
                 <div className={styles.mainContent}>
                     {
                         systemData.map(item => {

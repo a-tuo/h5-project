@@ -38,14 +38,12 @@ function SystemSettings(props) {
             <Form.Item
                 name='equipmentNumber'
                 label={t('设备编号')}
-                rules={[{ required: true, message: '设备编号不能为空' }]}
             >
                 <Input placeholder={t('请输入设备编号')} />
             </Form.Item>
             <Form.Item
                 name='corporateName'
                 label={t('公司名称')}
-                rules={[{ required: true, message: t('公司名称不能为空') }]}
             >
                 <Input placeholder={t('请输入公司名称')} />
             </Form.Item>
@@ -87,23 +85,6 @@ function SystemSettings(props) {
                         setTimeVisble(!curValues.restart)
                     }
                 }}
-                // arrow={
-                //     form.getFieldValue('restartTime') ? (
-                //         <CloseCircleFill
-                //             style={{
-                //                 fontSize: 14,
-                //             }}
-                //             onClick={e => {
-                //                 e.stopPropagation()
-                //                 console.log(form.getFieldValue('restartTime'),'restartTime')
-                //                 console.log('234')
-                //                 form.setFieldsValue({ restartTime: [] })
-                //             }}
-                //         />
-                //     ) : (
-                //         true
-                //     )
-                // }
                 onClick={() => {
                     setPickerVisible(true)
                 }}
@@ -117,7 +98,7 @@ function SystemSettings(props) {
                     }}
                     columns={basicColumns}
                     visible={pickerVisible}
-                    defaultValue={['1', '00','00']}
+                    defaultValue={['1', '00', '00']}
                     onClose={() => {
                         setPickerVisible(false)
                     }}
@@ -144,17 +125,6 @@ function SystemSettings(props) {
                         }
                     }
                 </Picker>
-                {/* <DatePicker
-                    visible={pickerVisible}
-                    precision='second'
-                    onClose={() => {
-                        setPickerVisible(false)
-                    }}
-                >
-                    {value =>
-                        value ? dayjs(value).format('YYYY-MM-DD hh:mm:ss') : <div style={{ color: '#C0C4CC' }}>{t('请选择日期')}</div>
-                    }
-                </DatePicker> */}
             </Form.Item>
             <Form.Item
                 // visible={form.getFieldValue('isSleep')}
